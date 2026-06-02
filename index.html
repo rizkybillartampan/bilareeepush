@@ -119,34 +119,76 @@ body {
 }
 
 /* RUNNING TEXT */
-.marquee {
-  position: sticky;
-  top: 0px;   /* jarak dari atas saat scroll */
-  z-index: 999;
 
-  overflow: hidden;
-  white-space: nowrap;
 
-  background: rgba(255,255,255,0.08);
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 15px;
 
-  backdrop-filter: blur(6px);
+
+
+.marquee{
+  position:sticky;
+  top:0;
+  z-index:999;
+
+  display:flex;
+  align-items:center;
+
+  background:rgba(255,255,255,0.08);
+  border-radius:10px;
+  overflow:hidden;
+
+  backdrop-filter:blur(6px);
+  margin-bottom:15px;
 }
 
-.marquee span {
-  display: inline-block;
-  padding-left: 100%;
-  animation: scroll 40s linear infinite;
-  font-size: 13px;
-  color: #facc15;
+.marquee-logo{
+  width:90px;
+  height:42px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+
+  background:#111;
+  border-radius:10px 0 0 10px;
 }
 
-@keyframes scroll {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-100%); }
+.marquee-logo img{
+  max-width:80px;
+  max-height:32px;
+  object-fit:contain;
 }
+
+.marquee-text{
+  flex:1;
+  overflow:hidden;
+  white-space:nowrap;
+  padding:10px 0;
+  background: linear-gradient(135deg, #fffcf9 0%, #ac7b00 20%, #c39d4e 50%, #6b4a1f 75%, #2a1622 100%);
+}
+
+.marquee-text span{
+  display:inline-block;
+  padding-left:100%;
+  animation:scroll 40s linear infinite;
+
+  font-size:13px;
+  color:#facc15;
+}
+
+@keyframes scroll{
+  from{
+    transform:translateX(0);
+  }
+  to{
+    transform:translateX(-100%);
+  }
+}
+
+
+
+
+
 
 
 .btn {
@@ -755,9 +797,17 @@ body {
 
 
 <div class="marquee">
-  <span id="runningText">
-    Loading...
-  </span>
+
+<div class="marquee-logo">
+  <img src="assets/images/logo-1000viewpx.png" alt="Logo">
+</div>
+
+  <div class="marquee-text">
+    <span id="runningText">
+      Loading...
+    </span>
+  </div>
+
 </div>
 
 <div class="wrapper">
