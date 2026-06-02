@@ -2,137 +2,1384 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>4D Center Animation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ORIN23 VIP | Situs Muda , Game Online & Platform Digital Terpercaya</title>
+
+<meta name="description" content="Orin23 adalah situs maksimal setiap hari.">
+
+<meta name="keywords" content="
+orin23, Orin 23, situs orin23, Orin23 game, digital
+">
+
+
+<meta name="author" content="Orin23">
+
+
+<meta property="og:title" content="ORIN23 VIP | Situs Terpercaya">
+<meta property="og:description" content="Orin adalah situs terpercaya.">
+<meta property="og:image" content="logo-1000viewpx.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://orin23.asia/">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ORIN23 VIP | Cuan Muda , Game Online & Platform Digital Terpercaya">
+<meta name="twitter:description" content="Orin23 adalah game menang maksimal setiap hari..">
+<meta name="twitter:image" content="assets/images/logo-1000viewpx.png">
+
+
+
+<link rel="icon" href="assets/images/logo-1000viewpx.png" type="image/png">
 
 <style>
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    height: 100vh;
-    overflow: hidden;
-    background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
+  padding: 0;
+  margin: 0;
+  font-family: Arial, sans-serif;
+
+  background:
+    linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+    url("assets/images/regban.jpg") no-repeat center center;
+
+  background-size: cover;
+  background-attachment: fixed;
+
+  color: white;
 }
 
-/* ===== BACKGROUND (TETAP DI TENGAH, TANPA KANAN/KIRI) ===== */
-.space {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, rgba(0,255,255,0.15), transparent 60%),
-                radial-gradient(circle at center, rgba(255,0,255,0.15), transparent 60%),
-                radial-gradient(circle at center, rgba(0,0,255,0.15), transparent 60%);
-    animation: pulseBg 6s ease-in-out infinite;
-    filter: blur(2px);
+/* CENTER WRAPPER */
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 10px;
+  gap: 15px;
 }
 
-@keyframes pulseBg {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
+
+.slider-box {
+  width: 100%;
+  max-width: 100%;   /* ⬅ biar tidak dibatasi */
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
 }
 
-/* ===== CENTER TEXT ===== */
-.text {
-    position: relative;
-    color: white;
-    font-size: 60px;
-    letter-spacing: 12px;
-    text-transform: uppercase;
-    text-shadow:
-        0 0 10px cyan,
-        0 0 20px magenta,
-        0 0 40px cyan;
-
-    animation: zoomVertical 4s ease-in-out infinite;
+.slider {
+  position: relative;
+  overflow: hidden;
 }
 
-/* ===== ONLY UP DOWN + ZOOM (NO LEFT RIGHT) ===== */
-@keyframes zoomVertical {
-    0% {
-        transform: translateY(40px) scale(0.6);
-        opacity: 0;
-        filter: blur(5px);
-    }
-    50% {
-        transform: translateY(0px) scale(1.2);
-        opacity: 1;
-        filter: blur(0px);
-    }
-    100% {
-        transform: translateY(-40px) scale(0.6);
-        opacity: 0;
-        filter: blur(5px);
-    }
+.slides {
+  display: flex;
+  transition: transform 0.5s ease;
 }
 
-/* ===== PORTAL RING CENTER ===== */
-.ring {
-    position: absolute;
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    border: 2px solid rgba(0,255,255,0.5);
-    box-shadow: 0 0 25px cyan;
-    animation: ringPulse 3s infinite;
+.slides img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  background: #1e1e1e;
+  flex-shrink: 0;
 }
 
-@keyframes ringPulse {
-    0% {
-        transform: scale(0.6);
-        opacity: 0.3;
-    }
-    50% {
-        transform: scale(1.2);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1.8);
-        opacity: 0;
-    }
+/* nav */
+.btn-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  border: none;
+  color: white;
+  font-size: 18px;
+  padding: 10px 12px;
+  cursor: pointer;
+  border-radius: 50%;
 }
 
-/* ===== OUTER RING ===== */
-.ring2 {
-    position: absolute;
-    width: 450px;
-    height: 450px;
-    border-radius: 50%;
-    border: 2px solid rgba(255,0,255,0.25);
-    animation: ringPulse2 4s infinite;
+.prev { left: 10px; }
+.next { right: 10px; }
+
+
+.box {
+  width: 100%;
+  max-width: 420px;
+
+  background: rgba(40,40,40,0.85);
+  border-radius: 16px;
+  padding: 18px;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  text-align: center;
+  backdrop-filter: blur(6px);
 }
 
-@keyframes ringPulse2 {
-    0% {
-        transform: scale(1.4);
-        opacity: 0;
-    }
-    50% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(2);
-        opacity: 0;
-    }
+/* RUNNING TEXT */
+.marquee {
+  position: sticky;
+  top: 0px;   /* jarak dari atas saat scroll */
+  z-index: 999;
+
+  overflow: hidden;
+  white-space: nowrap;
+
+  background: rgba(255,255,255,0.08);
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+
+  backdrop-filter: blur(6px);
 }
+
+.marquee span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scroll 40s linear infinite;
+  font-size: 13px;
+  color: #facc15;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.2s;
+  color: white;
+  position: relative; /* penting untuk HOT badge */
+  overflow: hidden;
+}
+
+
+
+
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.35),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+  pointer-events: none;
+
+  animation: shineMove 3s infinite;
+}
+
+/* animasi kilat kiri → kanan */
+@keyframes shineMove {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 130%;
+  }
+}
+
+/* warna */
+
+
+
+.btn-vip {
+  background: linear-gradient(45deg, #fffcf9 0%, #efb33b 25%, #c39d4e 55%, #8a6a2f 75%, #36222e 100%);
+}
+
+.btn-ref {
+  background: linear-gradient(45deg, #fffcf9 0%, #efb33b 25%, #c39d4e 55%, #8a6a2f 75%, #36222e 100%);
+}
+
+.btn-wa {
+  background: linear-gradient(45deg, #fffcf9 0%, #efb33b 25%, #c39d4e 55%, #8a6a2f 75%, #36222e 100%);
+}
+
+
+
+
+
+
+.hot::after {
+  content: "HOT";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+
+  background: red;
+  color: white;
+  font-size: 10px;
+  padding: 3px 6px;
+  border-radius: 6px;
+
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(255,0,0,0.6);
+}
+
+@keyframes shakePause {
+  0% { transform: translateX(0); }
+  5% { transform: translateX(-2px); }
+  10% { transform: translateX(2px); }
+  15% { transform: translateX(-2px); }
+  20% { transform: translateX(2px); }
+
+  /* berhenti lama */
+  100% { transform: translateX(0); }
+}
+
+.hot {
+  animation: shakePause 2.5s infinite;
+  display: inline-block;
+}
+
+/* hover biar makin hidup */
+.btn:hover {
+  transform: scale(1.05);
+  animation: none; /* stop shake saat hover */
+}
+
+
+
+
+
+/* GRID 2 KOLOM */
+/* GRID */
+.grid {
+  width: 100%;
+  max-width: 420px;
+  margin: 20px auto;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+/* CARD */
+.card {
+  display: block;
+  text-decoration: none;
+  color: white;
+
+  background: rgba(30,30,30,0.9);
+  border-radius: 14px;
+  overflow: hidden;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 18px rgba(255,215,0,0.25);
+}
+
+/* IMAGE */
+.card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  object-position: center;
+  
+  transform: scale(1.05);
+
+  filter: brightness(1.1) contrast(1.1);
+  transition: 0.3s ease;
+
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.card:hover img {
+  transform: scale(1.12);
+  filter: brightness(1.2) contrast(1.2);
+}
+
+/* INFO AREA */
+.info {
+  padding: 10px;
+  color: #f8f1e6;
+  background:linear-gradient(135deg, #fffcf9 0%, #ac7b00 20%, #c39d4e 50%, #6b4a1f 75%, #2a1622 100%);
+}
+
+/* TITLE */
+.info h3 {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #fff3b0; /* emas terang biar nyala */
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+/* LABEL */
+.label {
+  font-size: 11px;
+  opacity: 0.85;
+  margin-top: 6px;
+  color: #f6e7c2;
+}
+
+/* TEXT */
+.info p {
+  margin: 2px 0;
+  font-size: 12px;
+  color: #f8f1e6;
+}
+
+/* POLA BOX */
+.pola {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+
+.pola span {
+  background: rgba(255, 255, 255, 0.12);
+  padding: 3px 6px;
+  border-radius: 6px;
+  font-size: 11px;
+  color: #fff6dd;
+  border: 1px solid rgba(195, 157, 78, 0.35);
+}
+/* HOVER */
+.card:hover {
+  transform: scale(1.05);
+}
+
+/* RESPONSIVE HP */
+@media (max-width: 480px) {
+  .card img {
+    height: 80px;
+  }
+}
+
+
+
+
+
+
+.footer{
+  position: relative;
+  overflow: hidden;
+  margin-top: 50px;
+  color: white;
+}
+
+.footer-overlay{
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left,
+    rgba(255,255,255,0.18), transparent 35%);
+  pointer-events: none;
+}
+
+.footer-container{
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: auto;
+  padding: 50px 25px 35px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap: 40px;
+}
+
+.footer-logo{
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #fff;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.25);
+}
+
+.footer-desc{
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.92);
+}
+
+.footer-title{
+  font-size: 20px;
+  margin-bottom: 18px;
+  color: #fff;
+  position: relative;
+}
+
+.footer-title::after{
+  content: "";
+  width: 50px;
+  height: 3px;
+  background: rgba(255,255,255,0.8);
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  border-radius: 10px;
+}
+
+.footer-links{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.footer-links a{
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.footer-links a:hover{
+  transform: translateX(5px);
+  color: #fff;
+}
+
+.footer-help{
+  margin-top: 20px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.92);
+  font-size: 15px;
+}
+
+.livechat-btn{
+  margin-top: 22px;
+  padding: 13px 24px;
+  border: none;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(8px);
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.livechat-btn:hover{
+  background: rgba(255,255,255,0.28);
+  transform: translateY(-2px);
+}
+
+.footer-bottom{
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 18px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.92);
+  border-top: 1px solid rgba(255,255,255,0.15);
+  background: rgba(0,0,0,0.08);
+}
+
+.footer-bottom span{
+  font-weight: bold;
+  color: #fff;
+}
+
+@media(max-width:768px){
+
+  .footer{
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+  }
+
+  .footer-container{
+    padding: 40px 20px 30px;
+    gap: 35px;
+  }
+
+  .footer-logo{
+    font-size: 26px;
+  }
+
+}
+
+
+
 </style>
 </head>
 
 <body>
 
-<div class="space"></div>
-<div class="ring"></div>
-<div class="ring2"></div>
 
-<div class="text">bab Ledy2</div>
+<div class="marquee">
+  <span id="runningText">
+    Loading...
+  </span>
+</div>
+
+<div class="wrapper">
+
+
+  <div class="slider-box">
+
+    <div class="slider">
+
+      <div
+        class="slides"
+        id="slides">
+
+      </div>
+
+      <button
+        class="btn-nav prev"
+        onclick="prevSlide()">
+
+        ‹
+
+      </button>
+
+      <button
+        class="btn-nav next"
+        onclick="nextSlide()">
+
+        ›
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="box"
+    id="buttonContainer">
+
+  </div>
+
+
+  <div
+    class="grid"
+    id="cardContainer">
+
+  </div>
+
+</div>
+
+
+<footer class="footer">
+
+  <div class="footer-overlay"></div>
+
+  <div class="footer-container">
+
+  
+    <div class="footer-box">
+
+      <h2
+        class="footer-logo"
+        id="footerLogo">
+
+        Loading...
+
+      </h2>
+
+      <p
+        class="footer-desc"
+        id="footerDescription">
+
+        Loading...
+
+      </p>
+
+    </div>
+
+ 
+    <div class="footer-box">
+
+      <h3 class="footer-title">
+
+        Kategori
+
+      </h3>
+
+      <div
+        class="footer-links"
+        id="footerLinks">
+
+      </div>
+
+    </div>
+
+    <div class="footer-box">
+
+      <h3 class="footer-title">
+
+        Bantuan
+
+      </h3>
+
+      <p
+        class="footer-help"
+        id="footerHelp">
+
+        Loading...
+
+      </p>
+
+      <button
+        class="livechat-btn"
+        id="livechatButton">
+
+        Live Chat
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <div
+    class="footer-bottom"
+    id="footerBottom">
+
+    Loading...
+
+  </div>
+
+</footer>
+
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import { getAnalytics, isSupported }
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
+
+import {
+  getDatabase,
+  ref,
+  get,
+  child
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyD4psSFnKb1bQNpJVYySNnB_viOYF90EYk",
+
+  authDomain: "orin23project.firebaseapp.com",
+
+  databaseURL:
+  "https://orin23project-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+  projectId: "orin23project",
+
+  storageBucket:
+  "orin23project.firebasestorage.app",
+
+  messagingSenderId:
+  "471960564338",
+
+  appId:
+  "1:471960564338:web:a5cc39403a2940672488eb"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+(async()=>{
+
+const snap = await get(ref(db));
+
+console.log(
+"ISI DATABASE:",
+snap.val()
+);
+
+})();
+
+
+
+
+
+
+let analytics = null;
+
+try {
+
+  const analyticsSupported =
+    await isSupported();
+
+  if (analyticsSupported) {
+
+    analytics =
+      getAnalytics(app);
+
+  }
+
+} catch (err) {
+
+  console.warn(
+    "Analytics tidak aktif:",
+    err
+  );
+
+}
+
+console.log(
+  "Firebase berhasil terhubung"
+);
+
+
+
+
+
+
+async function loadRunningText(){
+
+try{
+
+const el =
+document.getElementById("runningText");
+
+console.log("ELEMENT:", el);
+
+const snap =
+await get(
+ref(db,"running_text/main")
+);
+
+console.log(
+"SNAP EXISTS:",
+snap.exists()
+);
+
+console.log(
+"SNAP DATA:",
+snap.val()
+);
+
+if(!snap.exists()){
+
+el.textContent =
+"DATA TIDAK ADA";
+
+return;
+
+}
+
+el.textContent =
+snap.val().text;
+
+console.log(
+"TEXT BERHASIL DISET"
+);
+
+}catch(err){
+
+console.error(
+"ERROR RUNNING TEXT:",
+err
+);
+
+}
+
+}
+
+
+
+
+
+
+async function loadBanners(){
+
+try{
+
+const slides =
+document.getElementById("slides");
+
+if(!slides) return;
+
+slides.innerHTML = "";
+
+const snap =
+await get(ref(db,"banners"));
+
+console.log(
+"BANNERS:",
+snap.val()
+);
+
+if(!snap.exists()){
+
+slides.innerHTML = `
+<img
+src="https://picsum.photos/900/400"
+alt="banner">
+`;
+
+return;
+
+}
+
+const data = snap.val();
+
+const arr =
+Object.keys(data)
+.map(id=>({
+
+id,
+...data[id]
+
+}))
+.sort(
+(a,b)=>
+(a.order || 0) -
+(b.order || 0)
+);
+
+arr.forEach(item=>{
+
+slides.innerHTML += `
+
+<img
+src="${item.image || ''}"
+alt="banner">
+
+`;
+
+});
+
+console.log(
+"TOTAL BANNER:",
+arr.length
+);
+
+showSlide(0);
+
+}catch(err){
+
+console.error(
+"BANNER ERROR:",
+err
+);
+
+}
+
+}
+loadBanners()
+
+
+
+async function loadButtons(){
+
+try{
+
+const container =
+document.getElementById(
+"buttonContainer"
+);
+
+if(!container) return;
+
+container.innerHTML = "";
+
+const snap =
+await get(
+ref(db,"buttons")
+);
+
+console.log(
+"BUTTONS:",
+snap.val()
+);
+
+if(!snap.exists()){
+
+container.innerHTML = `
+<a
+class="btn btn-vip"
+href="#">
+BUTTON
+</a>
+`;
+
+return;
+
+}
+
+const data =
+snap.val();
+
+const arr =
+Object.keys(data)
+
+.filter(id => data[id])
+
+.map(id=>({
+
+id,
+...data[id]
+
+}))
+
+.sort(
+(a,b)=>
+(a.order || 0) -
+(b.order || 0)
+);
+
+arr.forEach(item=>{
+
+container.innerHTML += `
+
+<a
+class="btn btn-vip"
+href="${item.url || '#'}"
+target="${
+item.newTab
+? '_blank'
+: '_self'
+}"
+style="
+display:block;
+margin:10px 0;
+border:2px solid #e2a700;
+">
+
+${item.title || 'BUTTON'}
+
+</a>
+
+`;
+
+});
+
+console.log(
+"TOTAL BUTTON:",
+arr.length
+);
+
+}catch(err){
+
+console.error(
+"BUTTON ERROR:",
+err
+);
+
+}
+
+}
+
+
+
+async function loadCards(){
+
+try{
+
+const container =
+document.getElementById(
+"cardContainer"
+);
+
+if(!container) return;
+
+container.innerHTML = "";
+
+const snap =
+await get(
+ref(db,"cards")
+);
+
+console.log(
+"CARDS:",
+snap.val()
+);
+
+if(!snap.exists()){
+
+container.innerHTML =
+"<h3>Tidak ada card</h3>";
+
+return;
+
+}
+
+const data =
+snap.val();
+
+const arr =
+Object.keys(data)
+.map(id=>({
+
+id,
+...data[id]
+
+}))
+.sort(
+(a,b)=>
+(a.order || 0) -
+(b.order || 0)
+);
+
+console.log(
+"CARD ARRAY:",
+arr
+);
+
+arr.forEach(item=>{
+
+let tagsHtml = "";
+
+(item.tags || [])
+.forEach(tag=>{
+
+tagsHtml += `
+<span>${tag}</span>
+`;
+
+});
+
+container.innerHTML += `
+
+<a
+class="card"
+href="${item.url || '#'}"
+target="${
+item.newTab
+? '_blank'
+: '_self'
+}">
+
+<img
+src="${item.image || ''}"
+alt="${item.title || ''}">
+
+<div class="info">
+
+<h3>
+${item.title || ''}
+</h3>
+
+<p class="label">
+${item.label || ''}
+</p>
+
+<p>
+${item.text1 || ''}
+</p>
+
+<p>
+${item.text2 || ''}
+</p>
+
+<div class="pola">
+
+${tagsHtml}
+
+</div>
+
+</div>
+
+</a>
+
+`;
+
+});
+
+console.log(
+"TOTAL CARD:",
+arr.length
+);
+
+}catch(err){
+
+console.error(
+"CARD ERROR:",
+err
+);
+
+}
+
+}
+
+
+
+async function loadFooter(){
+
+try{
+
+const footerLogo =
+document.getElementById(
+"footerLogo"
+);
+
+const footerDescription =
+document.getElementById(
+"footerDescription"
+);
+
+const footerHelp =
+document.getElementById(
+"footerHelp"
+);
+
+const footerBottom =
+document.getElementById(
+"footerBottom"
+);
+
+const footerLinks =
+document.getElementById(
+"footerLinks"
+);
+
+const livechatButton =
+document.getElementById(
+"livechatButton"
+);
+
+const snap =
+await get(
+ref(
+db,
+"footer/main"
+)
+);
+
+if(!snap.exists()){
+
+console.log(
+"FOOTER KOSONG"
+);
+
+return;
+
+}
+
+const data =
+snap.val();
+
+if(footerLogo)
+footerLogo.textContent =
+data.logo || "";
+
+if(footerDescription)
+footerDescription.textContent =
+data.description || "";
+
+if(footerHelp)
+footerHelp.textContent =
+data.help || "";
+
+if(footerBottom)
+footerBottom.textContent =
+data.bottom || "";
+
+if(
+footerLinks &&
+Array.isArray(data.links)
+){
+
+footerLinks.innerHTML="";
+
+data.links.forEach(link=>{
+
+footerLinks.innerHTML += `
+
+<a
+href="${link.url || '#'}"
+target="${
+link.newTab
+? '_blank'
+: '_self'
+}">
+
+${link.title || ''}
+
+</a>
+
+`;
+
+});
+
+}
+
+if(
+livechatButton &&
+data.livechat
+){
+
+livechatButton.onclick=()=>{
+
+window.open(
+data.livechat,
+"_blank"
+);
+
+};
+
+}
+
+}catch(err){
+
+console.error(
+"FOOTER ERROR:",
+err
+);
+
+}
+
+}
+
+
+let index = 0;
+
+window.showSlide = function (i) {
+
+  const slides =
+    document.getElementById(
+      "slides"
+    );
+
+  if (!slides) return;
+
+  const total =
+    slides.children.length;
+
+  if (total <= 0) return;
+
+  if (i < 0) {
+
+    index =
+      total - 1;
+
+  }
+
+  else if (
+    i >= total
+  ) {
+
+    index = 0;
+
+  }
+
+  else {
+
+    index = i;
+
+  }
+
+  slides.style.transform =
+    `translateX(-${index * 100}%)`;
+
+};
+
+window.nextSlide =
+function () {
+
+  showSlide(
+    index + 1
+  );
+
+};
+
+window.prevSlide =
+function () {
+
+  showSlide(
+    index - 1
+  );
+
+};
+
+
+
+let sliderTimer =
+null;
+
+function startSlider() {
+
+  if (sliderTimer) {
+
+    clearInterval(
+      sliderTimer
+    );
+
+  }
+
+  sliderTimer =
+    setInterval(() => {
+
+      const slides =
+        document.getElementById(
+          "slides"
+        );
+
+      if (
+        !slides
+      ) return;
+
+      if (
+        slides.children
+          .length > 1
+      ) {
+
+        nextSlide();
+
+      }
+
+    }, 4500);
+
+}
+
+startSlider();
+
+
+
+
+
+await loadRunningText();
+
+await loadBanners();
+
+await loadButtons();
+
+await loadCards();
+
+await loadFooter();
+
+showSlide(0);
+
+
+
+</script>
 
 </body>
+
 </html>
