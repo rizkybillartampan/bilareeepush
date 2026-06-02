@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin Panel ORIS23</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+display:flex;
+min-height:100vh;
+}
+
+.sidebar{
+width:260px;
+background:#111827;
+padding:20px;
+position:fixed;
+left:0;
+top:0;
+bottom:0;
+overflow:auto;
+border-right:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+margin-bottom:30px;
+text-align:center;
+color:#facc15;
+}
+
+.menu{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.menu button{
+background:#1f2937;
+border:none;
+color:white;
+padding:14px;
+border-radius:10px;
+cursor:pointer;
+text-align:left;
+font-size:14px;
+}
+
+.menu button:hover{
+background:#374151;
+}
+
+.main{
+margin-left:260px;
+padding:25px;
+width:100%;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.header h1{
+font-size:26px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:25px;
+}
+
+.stat-card{
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+}
+
+.stat-title{
+font-size:13px;
+opacity:.8;
+}
+
+.stat-value{
+font-size:30px;
+font-weight:bold;
+margin-top:8px;
+}
+
+.section{
+display:none;
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+}
+
+.section.active{
+display:block;
+}
+
+.section h2{
+margin-bottom:15px;
+}
+
+.input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#0f172a;
+color:white;
+margin-bottom:12px;
+}
+
+.textarea{
+width:100%;
+height:520px;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#0f172a;
+color:white;
+resize:none;
+margin-bottom:12px;
+}
+
+.btn{
+display:block;
+width:100%;
+padding:12px;
+margin:12px 0;
+border-radius:10px;
+font-size:15px;
+font-weight:bold;
+text-decoration:none;
+text-align:center;
+color:#fff;
+
+/* WARNA TOMBOL */
+background:linear-gradient(
+45deg,
+#fffcf9 0%,
+#efb33b 25%,
+#c39d4e 55%,
+#8a6a2f 75%,
+#36222e 100%
+);
+}
+
+.table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
+}
+
+.table th,
+.table td{
+padding:12px;
+border-bottom:1px solid rgba(255,255,255,.1);
+text-align:left;
+}
+
+.action{
+display:flex;
+gap:8px;
+}
+
+.edit-btn,
+.delete-btn{
+border:none;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.edit-btn{
+background:#22c55e;
+color:white;
+}
+
+.delete-btn{
+background:#ef4444;
+color:white;
+}
+
+@media(max-width:768px){
+
+.sidebar{
+width:75px;
+}
+
+.logo{
+font-size:16px;
+}
+
+.menu button{
+font-size:0;
+display:flex;
+justify-content:center;
+}
+
+.menu button i{
+font-size:18px;
+}
+
+.main{
+margin-left:75px;
+}
+
+}
+
+#buttonPreview{
+margin-top:15px;
+}
+
+#buttonPreview .btn{
+display:block;
+width:100%;
+padding:12px;
+margin:12px 0;
+border-radius:10px;
+font-size:15px;
+font-weight:bold;
+text-decoration:none;
+text-align:center;
+color:#fff;
+
+background:linear-gradient(
+45deg,
+#fffcf9 0%,
+#efb33b 25%,
+#c39d4e 55%,
+#8a6a2f 75%,
+#36222e 100%
+);
+}
+
+#cardPreview{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+margin-top:20px;
+}
+
+#cardPreview .card{
+display:block;
+text-decoration:none;
+color:white;
+background:#111827;
+border-radius:12px;
+overflow:hidden;
+}
+
+#cardPreview .card img{
+width:100%;
+height:120px;
+object-fit:cover;
+}
+
+#cardPreview .info{
+padding:10px;
+}
+
+#cardPreview .info h3{
+font-size:14px;
+margin-bottom:5px;
+}
+
+#cardPreview .label{
+font-size:12px;
+opacity:.8;
+}
+
+#cardPreview .pola{
+display:flex;
+gap:5px;
+flex-wrap:wrap;
+margin-top:8px;
+}
+
+#cardPreview .pola span{
+background:#334155;
+padding:3px 6px;
+border-radius:5px;
+font-size:11px;
+}
+
+
+
+
+.admin-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+
+  padding:12px 18px;
+  margin:20px auto;
+
+  background: linear-gradient(135deg,#c39d4e,#2a1622);
+  color:#fff;
+
+  font-weight:bold;
+  font-size:14px;
+  text-decoration:none;
+
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.1);
+
+  box-shadow:0 8px 20px rgba(0,0,0,0.4);
+  backdrop-filter:blur(6px);
+
+  transition:0.2s;
+}
+
+.admin-btn i{
+  color:#ffd36a;
+}
+
+.admin-btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px rgba(255,215,0,0.3);
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="sidebar">
+<div class="logo">
+ORIN23
+</div>
+<div class="menu">
+
+<button onclick="showSection('dashboard')">
+<i class="fas fa-chart-line"></i>
+ Dashboard
+</button>
+
+<button onclick="showSection('running')">
+<i class="fas fa-bullhorn"></i>
+ Running Text
+</button>
+
+<button onclick="showSection('banner')">
+<i class="fas fa-images"></i>
+ Banner
+</button>
+
+<button onclick="showSection('buttons')">
+<i class="fas fa-link"></i>
+ Buttons
+</button>
+
+<button onclick="showSection('cards')">
+<i class="fas fa-layer-group"></i>
+ Cards
+</button>
+
+<button onclick="showSection('footer')">
+<i class="fas fa-shoe-prints"></i>
+ Footer
+</button>
+
+
+
+
+
+</div>
+
+</div>
+
+<div class="main">
+
+<div class="header">
+<h1>Admin LOZD Dashboard</h1>
+<button onclick="logout()">Logout</button>
+
+</div>
+
+
+<div class="section active" id="dashboard">
+
+<div class="stats">
+
+<div class="stat-card">
+<div class="stat-title">
+Total Banner
+</div>
+<div class="stat-value" id="totalBanner">
+0
+</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-title">
+Total Buttons
+</div>
+<div class="stat-value" id="totalButtons">
+0
+</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-title">
+Total Cards
+</div>
+<div class="stat-value" id="totalCards">
+0
+</div>
+
+</div>
+<a href="adminartikel.html" class="admin-btn">
+  <i class="fa fa-cog"></i> PROMOSI
+</a>
+
+</div>
+
+</div>
+
+
+<div class="section" id="running">
+
+<h2>Running Text</h2>
+
+<textarea
+class="textarea"
+id="runningTextInput"
+placeholder="Masukkan running text">
+</textarea>
+
+<button class="btn" id="saveRunningText">
+Simpan
+</button>
+
+</div>
+
+<div class="section" id="banner">
+
+<h2>Banner</h2>
+
+<input
+class="input"
+id="bannerImage"
+placeholder="URL Gambar">
+
+<input
+class="input"
+id="bannerOrder"
+type="number"
+placeholder="Order">
+
+<button
+class="btn"
+id="addBanner">
+
+Tambah Banner
+
+</button>
+
+<table class="table">
+
+<thead>
+<tr>
+<th>Gambar</th>
+<th>Order</th>
+<th>Aksi</th>
+</tr>
+</thead>
+
+<tbody id="bannerTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div class="section" id="buttons">
+
+<h2>Buttons</h2>
+
+<input
+class="input"
+id="buttonTitle"
+placeholder="Judul">
+
+<input
+class="input"
+id="buttonUrl"
+placeholder="URL">
+
+<input
+class="input"
+id="buttonClass"
+placeholder="Class">
+
+<input
+class="input"
+id="buttonOrder"
+type="number"
+placeholder="Order">
+
+<button
+class="btn"
+id="addButton">
+
+Tambah Button
+
+</button>
+
+
+<h3 style="margin-top:20px">
+Preview Button
+</h3>
+
+<div id="buttonPreview"></div>
+
+
+
+
+<table class="table">
+
+<thead>
+<tr>
+<th>Judul</th>
+<th>URL</th>
+<th>Aksi</th>
+</tr>
+</thead>
+
+<tbody id="buttonTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div class="section" id="cards">
+
+<h2>Cards</h2>
+
+<input class="input" id="cardTitle" placeholder="Judul">
+<input class="input" id="cardImage" placeholder="URL Gambar">
+<input class="input" id="cardLabel" placeholder="Label">
+<input class="input" id="cardText1" placeholder="Text 1">
+<input class="input" id="cardText2" placeholder="Text 2">
+<input class="input" id="cardUrl" placeholder="URL">
+<input class="input" id="cardTags" placeholder="Tag1,Tag2,Tag3">
+<input class="input" id="cardOrder" type="number" placeholder="Order">
+
+<button
+class="btn"
+id="addCard">
+
+Tambah Card
+
+</button>
+
+<table class="table">
+
+<thead>
+<tr>
+<th>Judul</th>
+<th>Label</th>
+<th>Aksi</th>
+</tr>
+</thead>
+
+<tbody id="cardTable">
+
+</tbody>
+
+</table>
+
+
+<h3 style="margin-top:20px">
+Preview Card User
+</h3>
+
+<div
+id="cardPreview"
+class="grid">
+</div>
+
+
+</div>
+
+
+<div class="section" id="footer">
+
+<h2>Footer</h2>
+
+<input
+class="input"
+id="footerLogoInput"
+placeholder="Logo">
+
+<textarea
+class="textarea"
+id="footerDescriptionInput"
+placeholder="Deskripsi">
+</textarea>
+
+<textarea
+class="textarea"
+id="footerHelpInput"
+placeholder="Bantuan">
+</textarea>
+
+<h3>Kategori Footer</h3>
+
+<div id="footerLinksContainer">
+
+<div class="footer-link-row">
+
+<input
+class="input footer-title"
+placeholder="Nama Kategori">
+
+<input
+class="input footer-url"
+placeholder="Link Kategori">
+
+</div>
+
+</div>
+
+<button
+type="button"
+class="btn"
+id="addFooterLink">
+
++ Tambah Kategori
+
+</button>
+
+<input
+class="input"
+id="footerLivechatInput"
+placeholder="Livechat URL">
+
+<input
+class="input"
+id="footerBottomInput"
+placeholder="Copyright">
+
+<button
+class="btn"
+id="saveFooter">
+
+Simpan Footer
+
+</button>
+<h3 style="margin-top:20px">
+Preview Footer User
+</h3>
+
+<div
+id="footerPreview"
+style="
+margin-top:15px;
+padding:20px;
+background:#111827;
+border-radius:12px;
+">
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  set,
+  push,
+  get,
+  remove
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyD4psSFnKb1bQNpJVYySNnB_viOYF90EYk",
+
+  authDomain: "orin23project.firebaseapp.com",
+
+  databaseURL:
+  "https://orin23project-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+  projectId: "orin23project",
+
+  storageBucket:
+  "orin23project.firebasestorage.app",
+
+  messagingSenderId:
+  "471960564338",
+
+  appId:
+  "1:471960564338:web:a5cc39403a2940672488eb"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+(function () {
+  const session = localStorage.getItem("adminLogin");
+
+  if (!session) {
+    window.location.replace("../loginadminlord.html");
+    return;
+  }
+
+  try {
+    const data = JSON.parse(session);
+
+    if (!data.username) {
+      throw new Error();
+    }
+
+  } catch (e) {
+    localStorage.removeItem("adminLogin");
+    window.location.replace("../loginadminlord.html");
+  }
+})();
+
+/* ======================
+AUTH CHECK (WAJIB LOGIN FIX STABLE)
+====================== */
+/* ======================
+AUTH CHECK (STABLE FIX FINAL)
+====================== */
+function checkAuth() {
+  const session = localStorage.getItem("adminLogin");
+
+  if (!session) {
+    window.location.replace("loginadminlord.html");
+    return false;
+  }
+
+  try {
+    const data = JSON.parse(session);
+
+    if (!data.username || data.role !== "admin") {
+      throw new Error("invalid session");
+    }
+
+    return true;
+
+  } catch (e) {
+    localStorage.removeItem("adminLogin");
+    window.location.replace("loginadminlord.html");
+    return false;
+  }
+}
+/* ======================
+LOGOUT
+====================== */
+
+window.logout = function () {
+  localStorage.removeItem("adminLogin");
+  sessionStorage.removeItem("adminLogin");
+  window.location.replace("loginadminlord.html");
+};
+
+
+
+
+
+
+
+
+
+window.showSection = function(id){
+
+document
+.querySelectorAll(".section")
+.forEach(sec=>{
+
+sec.classList.remove("active");
+
+});
+
+document
+.getElementById(id)
+.classList.add("active");
+
+};
+
+
+
+async function loadRunningAdmin(){
+
+try{
+
+const snap =
+await get(
+ref(
+db,
+"running_text/main"
+)
+);
+
+if(!snap.exists()) return;
+
+document
+.getElementById(
+"runningTextInput"
+)
+.value =
+snap.val().text || "";
+
+}catch(err){
+
+console.error(err);
+
+}
+
+}
+
+document
+.getElementById("saveRunningText")
+.onclick = async()=>{
+
+try{
+
+await set(
+ref(
+db,
+"running_text/main"
+),
+{
+text:
+document
+.getElementById(
+"runningTextInput"
+)
+.value
+}
+);
+
+alert(
+"Running Text Berhasil Disimpan"
+);
+
+}catch(err){
+
+console.error(err);
+
+alert(err.message);
+
+}
+
+};
+
+loadRunningAdmin()
+
+
+
+
+
+async function loadBannerAdmin(){
+
+const tbody =
+document.getElementById(
+"bannerTable"
+);
+
+tbody.innerHTML="";
+
+const snap =
+await get(
+ref(db,"banners")
+);
+
+if(!snap.exists()){
+
+document.getElementById(
+"totalBanner"
+).innerText = 0;
+
+return;
+
+}
+
+let total = 0;
+
+snap.forEach(item=>{
+
+total++;
+
+const data =
+item.val();
+
+tbody.innerHTML += `
+
+<tr>
+
+<td>
+<img
+src="${data.image}"
+width="80">
+</td>
+
+<td>
+${data.order || 0}
+</td>
+
+<td>
+
+<button
+class="delete-btn"
+onclick="deleteBanner('${item.key}')">
+
+Hapus
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+document.getElementById(
+"totalBanner"
+).innerText =
+total;
+
+}
+
+window.deleteBanner =
+async(id)=>{
+
+if(
+!confirm(
+"Hapus Banner ?"
+)
+) return;
+
+await remove(
+ref(
+db,
+"banners/" + id
+)
+);
+
+await loadBannerAdmin();
+
+};
+
+document
+.getElementById("addBanner")
+.onclick = async()=>{
+
+try{
+
+const image =
+document
+.getElementById(
+"bannerImage"
+)
+.value
+.trim();
+
+if(!image){
+
+alert(
+"URL gambar wajib diisi"
+);
+
+return;
+
+}
+
+await push(
+ref(db,"banners"),
+{
+image:image,
+order:Number(
+document
+.getElementById(
+"bannerOrder"
+)
+.value || 0
+)
+}
+);
+
+alert(
+"Banner berhasil ditambahkan"
+);
+
+await loadBannerAdmin();
+
+}catch(err){
+
+console.error(err);
+
+alert(err.message);
+
+}
+
+};
+
+
+await loadBannerAdmin()
+
+
+
+
+
+
+document.getElementById("addButton").onclick = async () => {
+  try {
+    const title = document.getElementById("buttonTitle").value.trim();
+    const url = document.getElementById("buttonUrl").value.trim();
+    const className = document.getElementById("buttonClass").value.trim();
+    const order = Number(document.getElementById("buttonOrder").value || 0);
+
+    if (!title || !url) {
+      alert("Judul & URL wajib diisi");
+      return;
+    }
+
+    await push(ref(db, "buttons"), {
+      title,
+      url,
+      className,
+      order,
+      newTab: true,
+
+
+  
+    });
+
+    document.getElementById("buttonTitle").value = "";
+    document.getElementById("buttonUrl").value = "";
+    document.getElementById("buttonClass").value = "";
+    document.getElementById("buttonOrder").value = "";
+
+    alert("Button berhasil ditambahkan");
+
+    await loadButtonsAdmin();
+
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+};
+
+async function loadButtonsAdmin() {
+  try {
+    const tbody = document.getElementById("buttonTable");
+    const preview = document.getElementById("buttonPreview");
+
+    tbody.innerHTML = "";
+    if (preview) preview.innerHTML = "";
+
+    const snap = await get(ref(db, "buttons"));
+
+    if (!snap.exists()) {
+      document.getElementById("totalButtons").innerText = "0";
+      return;
+    }
+
+    const data = snap.val();
+
+    const arr = Object.keys(data)
+      .map(id => ({
+        id,
+        ...data[id]
+      }))
+      .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+    document.getElementById("totalButtons").innerText = arr.length;
+
+    arr.forEach(item => {
+
+      // ======================
+      // ADMIN TABLE (VIEW + DELETE)
+      // ======================
+      tbody.innerHTML += `
+        <tr>
+          <td>${item.title || ""}</td>
+          <td>${item.url || ""}</td>
+
+          <td>
+            <button class="delete-btn" onclick="deleteButton('${item.id}')">
+              Hapus
+            </button>
+          </td>
+        </tr>
+      `;
+
+      // ======================
+      // USER PREVIEW (SAMA SEPERTI USER)
+      // ======================
+      if (preview) {
+        preview.innerHTML += `
+          <a class="btn"
+            href="${item.url || "#"}"
+            target="${item.newTab ? "_blank" : "_self"}"
+            onclick="increaseView('${item.id}')">
+            ${item.title || "BUTTON"}
+          </a>
+        `;
+      }
+
+    });
+
+  } catch (err) {
+    console.error("LOAD BUTTON ERROR:", err);
+  }
+}
+
+
+window.deleteButton = async (id) => {
+  try {
+    if (!confirm("Hapus Button?")) return;
+
+    await remove(ref(db, "buttons/" + id));
+
+    alert("Button berhasil dihapus");
+
+    await loadButtonsAdmin();
+
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+};
+await loadButtonsAdmin();
+
+
+
+
+
+
+async function loadCardsAdmin(){
+
+try{
+
+const tbody =
+document.getElementById(
+"cardTable"
+);
+
+const preview =
+document.getElementById(
+"cardPreview"
+);
+
+if(tbody){
+tbody.innerHTML = "";
+}
+
+if(preview){
+preview.innerHTML = "";
+}
+
+const snap =
+await get(
+ref(db,"cards")
+);
+
+if(!snap.exists()){
+
+document.getElementById(
+"totalCards"
+).innerText = "0";
+
+if(preview){
+
+preview.innerHTML = `
+<div style="
+padding:20px;
+text-align:center;
+opacity:.7;
+">
+Belum ada card
+</div>
+`;
+
+}
+
+return;
+
+}
+
+const data =
+snap.val();
+
+const arr =
+Object.keys(data)
+
+.filter(id=>
+data[id] &&
+typeof data[id] === "object"
+)
+
+.map(id=>({
+
+id,
+...data[id]
+
+}))
+
+.sort(
+(a,b)=>
+(a.order || 0) -
+(b.order || 0)
+);
+
+document.getElementById(
+"totalCards"
+).innerText =
+arr.length;
+
+arr.forEach(item=>{
+
+if(tbody){
+
+tbody.innerHTML += `
+
+<tr>
+
+<td>
+${item.title || ""}
+</td>
+
+<td>
+${item.label || ""}
+</td>
+
+<td>
+
+<button
+class="delete-btn"
+onclick="deleteCard('${item.id}')">
+
+Hapus
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+}
+
+if(preview){
+
+let tagsHtml = "";
+
+if(
+Array.isArray(item.tags)
+){
+
+item.tags.forEach(tag=>{
+
+tagsHtml += `
+<span>${tag}</span>
+`;
+
+});
+
+}
+
+preview.innerHTML += `
+
+<a
+class="card"
+href="${item.url || '#'}"
+target="_blank">
+
+<img
+src="${item.image || ''}"
+alt="${item.title || ''}">
+
+<div class="info">
+
+<h3>
+${item.title || ''}
+</h3>
+
+<p class="label">
+${item.label || ''}
+</p>
+
+<p>
+${item.text1 || ''}
+</p>
+
+<p>
+${item.text2 || ''}
+</p>
+
+<div class="pola">
+
+${tagsHtml}
+
+</div>
+
+</div>
+
+</a>
+
+`;
+
+}
+
+});
+
+console.log(
+"TOTAL CARD:",
+arr.length
+);
+
+}catch(err){
+
+console.error(
+"LOAD CARD ERROR:",
+err
+);
+
+}
+
+}
+
+
+
+
+
+
+window.deleteCard =
+async function(id){
+
+try{
+
+if(
+!confirm(
+"Hapus Card ?"
+)
+) return;
+
+await remove(
+ref(
+db,
+"cards/" + id
+)
+);
+
+alert(
+"Card berhasil dihapus"
+);
+
+await loadCardsAdmin();
+
+}catch(err){
+
+console.error(err);
+alert(err.message);
+
+}
+
+};
+await loadCardsAdmin();
+
+
+
+
+document
+.getElementById(
+"addCard"
+)
+.onclick = async()=>{
+
+try{
+
+const tags =
+(document.getElementById("cardTags").value || "")
+.split(",")
+.map(x=>x.trim())
+.filter(x=>x);
+
+await push(
+ref(db,"cards"),
+{
+
+title:
+document.getElementById("cardTitle").value,
+
+image:
+document.getElementById("cardImage").value,
+
+label:
+document.getElementById("cardLabel").value,
+
+text1:
+document.getElementById("cardText1").value,
+
+text2:
+document.getElementById("cardText2").value,
+
+url:
+document.getElementById("cardUrl").value,
+
+tags: tags,
+
+order:Number(
+document.getElementById("cardOrder").value || 0
+)
+
+}
+);
+
+alert(
+"Card berhasil ditambahkan"
+);
+
+await loadCardsAdmin();
+
+}catch(err){
+
+console.error(err);
+alert(err.message);
+
+}
+
+};
+
+
+
+
+
+
+async function loadFooterAdmin(){
+
+try{
+
+const snap =
+await get(
+ref(db,"footer/main")
+);
+
+const container =
+document.getElementById(
+"footerLinksContainer"
+);
+
+if(container){
+container.innerHTML = "";
+}
+
+if(!snap.exists()){
+
+if(container){
+
+container.innerHTML = `
+
+<div class="footer-link-row">
+
+<input
+class="input footer-title"
+placeholder="Nama Kategori">
+
+<input
+class="input footer-url"
+placeholder="Link Kategori">
+
+<button
+type="button"
+class="delete-btn remove-footer-link">
+
+Hapus
+
+</button>
+
+</div>
+
+`;
+
+}
+
+return;
+
+}
+
+const data =
+snap.val();
+
+if(container){
+
+(data.links || [])
+.forEach(link=>{
+
+container.insertAdjacentHTML(
+"beforeend",
+`
+
+<div class="footer-link-row">
+
+<input
+class="input footer-title"
+value="${link.title || ''}"
+placeholder="Nama Kategori">
+
+<input
+class="input footer-url"
+value="${link.url || ''}"
+placeholder="Link Kategori">
+
+<button
+type="button"
+class="delete-btn remove-footer-link">
+
+Hapus
+
+</button>
+
+</div>
+
+`
+);
+
+});
+
+}
+
+document.getElementById(
+"footerLogoInput"
+).value =
+data.logo || "";
+
+document.getElementById(
+"footerDescriptionInput"
+).value =
+data.description || "";
+
+document.getElementById(
+"footerHelpInput"
+).value =
+data.help || "";
+
+document.getElementById(
+"footerLivechatInput"
+).value =
+data.livechat || "";
+
+document.getElementById(
+"footerBottomInput"
+).value =
+data.bottom || "";
+
+if(
+typeof renderFooterPreview
+=== "function"
+){
+
+renderFooterPreview(data);
+
+}
+
+}catch(err){
+
+console.error(
+"LOAD FOOTER ERROR:",
+err
+);
+
+}
+
+}
+
+
+
+
+
+
+document
+.getElementById(
+"addFooterLink"
+)
+.onclick = ()=>{
+
+const container =
+document.getElementById(
+"footerLinksContainer"
+);
+
+container.insertAdjacentHTML(
+"beforeend",
+`
+
+<div class="footer-link-row">
+
+<input
+class="input footer-title"
+placeholder="Nama Kategori">
+
+<input
+class="input footer-url"
+placeholder="Link Kategori">
+
+<button
+type="button"
+class="delete-btn remove-footer-link">
+
+Hapus
+
+</button>
+
+</div>
+
+`
+);
+
+};
+
+
+
+
+
+
+
+document.addEventListener(
+"click",
+function(e){
+
+if(
+e.target.classList.contains(
+"remove-footer-link"
+)
+){
+
+e.target
+.closest(
+".footer-link-row"
+)
+.remove();
+
+}
+
+}
+);
+
+
+
+document
+.getElementById(
+"saveFooter"
+)
+.onclick = async()=>{
+
+try{
+
+const links = [];
+
+document
+.querySelectorAll(
+".footer-link-row"
+)
+.forEach(row=>{
+
+const title =
+row.querySelector(
+".footer-title"
+).value.trim();
+
+const url =
+row.querySelector(
+".footer-url"
+).value.trim();
+
+if(title){
+
+links.push({
+
+title,
+url
+
+});
+
+}
+
+});
+
+await set(
+ref(
+db,
+"footer/main"
+),
+{
+
+logo:
+document.getElementById(
+"footerLogoInput"
+).value,
+
+description:
+document.getElementById(
+"footerDescriptionInput"
+).value,
+
+help:
+document.getElementById(
+"footerHelpInput"
+).value,
+
+livechat:
+document.getElementById(
+"footerLivechatInput"
+).value,
+
+bottom:
+document.getElementById(
+"footerBottomInput"
+).value,
+
+links
+
+}
+);
+
+alert(
+"Footer berhasil disimpan"
+);
+
+await loadFooterAdmin();
+
+}catch(err){
+
+console.error(err);
+
+alert(err.message);
+
+}
+
+};
+
+await loadFooterAdmin()
+
+
+await loadRunningAdmin();
+
+await loadBannerAdmin();
+
+
+
+await loadCardsAdmin();
+
+await loadFooterAdmin();
+
+async function initAdmin() {
+  try {
+    await checkAuthSafe();
+
+    await loadRunningAdmin();
+    await loadBannerAdmin();
+    await loadButtonsAdmin();
+    await loadCardsAdmin();
+    await loadFooterAdmin();
+
+  } catch (err) {
+    console.error("INIT ERROR:", err);
+  }
+}
+
+document.addEventListener(
+"DOMContentLoaded",
+initAdmin
+);
+
+</script>
+
+</body>
+</html>

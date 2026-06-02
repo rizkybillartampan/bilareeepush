@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>Artikelkuu</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* BACKGROUND UTAMA */
+body {
+  background:
+    linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+    url("assets/images/regban.jpg") no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  color: white;
+}
+
+/* WRAPPER */
+.wrapper {
+  max-width: 900px;
+  margin: auto;
+  padding: 15px;
+}
+
+/* HEADER */
+.header {
+  text-align: center;
+  padding: 25px 10px;
+}
+
+.header h1 {
+  font-size: 26px;
+  color: #facc15;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.header p {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+/* GRID ARTIKEL */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* CARD */
+.card {
+  background: rgba(30,30,30,0.88);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+/* IMAGE */
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+/* CONTENT */
+.content {
+  padding: 12px;
+  background: linear-gradient(135deg,
+    #fffcf9 0%,
+    #c39d4e 40%,
+    #6b4a1f 80%,
+    #2a1622 100%);
+  color: #fff;
+}
+
+/* TITLE */
+.content h3 {
+  font-size: 15px;
+  color: #fff3b0;
+  margin-bottom: 6px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+/* TEXT - VERSI PROFESIONAL (AUTO RAPI) */
+.content p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.92);
+
+  /* bikin teks selalu rapi */
+  display: -webkit-box;
+   /* maksimal 3 baris */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  word-break: break-word;
+}
+
+
+/* TAG */
+.tag {
+  margin-top: 8px;
+  display: inline-block;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .content p {
+    font-size: 12px;
+  }
+}
+
+
+
+/* TOP BAR BEKU */
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+  padding: 10px;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(10px);
+
+  display: flex;
+  justify-content: center;
+}
+
+/* tombol tetap sama */
+.btn-game {
+  display: inline-block;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  padding: 14px;
+  border-radius: 12px;
+
+  font-weight: bold;
+  font-size: 15px;
+  color: white;
+  text-decoration: none;
+
+  background: linear-gradient(45deg, #fffcf9 0%, #efb33b 25%, #c39d4e 55%, #8a6a2f 75%, #36222e 100%);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+
+  position: relative;
+  overflow: hidden;
+  transition: 0.2s;
+}
+
+.btn-game:hover {
+  transform: scale(1.05);
+}
+
+/* efek kilat */
+.btn-game::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.35),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: shineMove 3s infinite;
+}
+
+@keyframes shineMove {
+  0% { left: -75%; }
+  100% { left: 130%; }
+}
+
+
+</style>
+</head>
+
+<body>
+
+
+<div class="top-bar">
+<a href="https://orin23.asia/" class="btn-game">
+  <i class="fa-solid fa-gamepad"></i> Pergi ke Permainan
+</a>
+</div>
+
+<div class="header">
+  <h1>Orin23</h1>
+  <p>Kumpulan Promosi terbaru Orin23</p>
+</div>
+
+
+<div class="wrapper">
+
+
+
+
+  <div class="grid" id="artikelList"></div>
+
+</div>
+
+
+
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  onValue
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyD4psSFnKb1bQNpJVYySNnB_viOYF90EYk",
+  authDomain: "orin23project.firebaseapp.com",
+  databaseURL: "https://orin23project-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "orin23project",
+  storageBucket: "orin23project.firebasestorage.app",
+  messagingSenderId: "471960564338",
+  appId: "1:471960564338:web:a5cc39403a2940672488eb",
+  measurementId: "G-6RG6GNMTXJ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const artikelRef = ref(db, "Artikelkuu");
+
+/* =========================
+   ESCAPE + SAFE TEXT
+========================= */
+function escapeHtml(text = "") {
+  return String(text)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function truncateText(text = "", max = 120) {
+  return text.length > max ? text.substring(0, max) + "..." : text;
+}
+
+/* =========================
+   RENDER ARTIKEL
+========================= */
+onValue(artikelRef, (snapshot) => {
+  const container = document.getElementById("artikelList");
+  container.innerHTML = "";
+
+  if (!snapshot.exists()) {
+    container.innerHTML = "<p style='opacity:0.7'>Belum ada artikel</p>";
+    return;
+  }
+
+  let html = "";
+
+  snapshot.forEach((child) => {
+    const data = child.val() || {};
+
+    const title = escapeHtml(data.title || "Tanpa Judul");
+    const desc = escapeHtml(data.desc || "");
+    const image = data.image || "https://via.placeholder.com/400x200";
+    const tag = data.tag || "INFO";
+
+html += `
+  <div class="card" onclick="openDetail('${child.key}')">
+    <img src="${image}" loading="lazy" />
+
+    <div class="content">
+      <h3>${title}</h3>
+      <p>${truncateText(desc, 120)}</p>
+      <span class="tag">${tag}</span>
+    </div>
+  </div>
+`;
+window.openDetail = function(id) {
+  window.location.href = "detailpromosi.html?id=" + id;
+}
+  });
+
+  container.innerHTML = html;
+});
+</script>
+
+
+</body>
+</html>

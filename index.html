@@ -15,7 +15,6 @@ orin23, Orin 23, situs orin23, Orin23 game, digital
 
 <meta name="author" content="Orin23">
 
-
 <meta property="og:title" content="ORIN23 VIP | Situs Terpercaya">
 <meta property="og:description" content="Orin adalah situs terpercaya.">
 <meta property="og:image" content="logo-1000viewpx.png">
@@ -27,8 +26,6 @@ orin23, Orin 23, situs orin23, Orin23 game, digital
 <meta name="twitter:title" content="ORIN23 VIP | Cuan Muda , Game Online & Platform Digital Terpercaya">
 <meta name="twitter:description" content="Orin23 adalah game menang maksimal setiap hari..">
 <meta name="twitter:image" content="assets/images/logo-1000viewpx.png">
-
-
 
 <link rel="icon" href="assets/images/logo-1000viewpx.png" type="image/png">
 
@@ -520,8 +517,237 @@ body {
 
 }
 
+#artikelGrid {
+  width: 100%;
+  max-width: 1100px;
+  margin: 20px auto;
+
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 15px;
+  padding: 0 10px;
+}
 
 
+.artikel-section{
+  width:100%;
+  padding:20px 10px;
+  max-width:1200px;
+  margin:auto;
+      background: #9c9c9c5e;
+    border-radius: 20px;
+}
+
+.artikel-title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+
+  margin: 20px auto;
+  padding: 12px 18px;
+
+  width: fit-content;
+
+  background: linear-gradient(135deg,#c39d4e,#2a1622);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  backdrop-filter: blur(6px);
+}
+
+.artikel-title i{
+  color: #ffd36a;
+  font-size: 18px;
+}
+
+/* GRID 3 KOLOM */
+.artikel-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:15px;
+}
+
+/* CARD */
+.artikel-card{
+  display:block;
+  text-decoration:none;
+  color:white;
+  background:rgba(30,30,30,0.92);
+  border-radius:14px;
+  overflow:hidden;
+  transition:0.2s;
+  box-shadow:0 8px 20px rgba(0,0,0,0.4);
+}
+
+.artikel-card:hover{
+  transform:scale(1.03);
+}
+
+.artikel-card img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+}
+
+/* INFO */
+.artikel-info{
+  padding:12px;
+  background:linear-gradient(135deg,#c39d4e,#2a1622);
+}
+
+.artikel-info h3{
+  font-size:14px;
+  margin:5px 0;
+}
+
+.artikel-info p{
+  font-size:12px;
+  opacity:0.85;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .artikel-grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(max-width:500px){
+  .artikel-grid{
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.title-electric{
+  display:flex;
+  justify-content:center;
+  margin:30px 0;
+  position:relative;
+}
+
+.title-electric span{
+  position:relative;
+  font-size:22px;
+  font-weight:800;
+  color:#fff;
+
+  padding:12px 22px;
+  border-radius:14px;
+
+  background:rgba(20,20,20,0.6);
+  border:1px solid rgba(255,255,255,0.1);
+
+  backdrop-filter:blur(6px);
+
+  text-shadow:
+    0 0 8px #ffd36a,
+    0 0 18px #ffcc00,
+    0 0 30px rgba(255,200,0,0.6);
+
+  overflow:hidden;
+}
+
+/* ⚡ PETIR DI BELAKANG */
+.title-electric::before{
+  content:"";
+  position:absolute;
+  inset:-20px;
+
+
+  filter: blur(10px);
+  opacity:0;
+  animation: lightning 1.8s infinite;
+}
+
+/* ⚡ kilatan random */
+@keyframes lightning{
+  0%   {opacity:0;}
+  10%  {opacity:1;}
+  20%  {opacity:0;}
+  35%  {opacity:1;}
+  50%  {opacity:0;}
+  70%  {opacity:1;}
+  100% {opacity:0;}
+}
+
+/* 🐍 efek ular / energi muter */
+.title-electric span::before{
+  content:"";
+  position:absolute;
+  top:-50%;
+  left:-50%;
+  width:200%;
+  height:200%;
+
+  background: conic-gradient(
+    from 0deg,
+    transparent,
+    rgba(255,255,255,0.15),
+    rgba(255,215,0,0.4),
+    transparent
+  );
+
+  animation: spin 3s linear infinite;
+  opacity:0.6;
+}
+
+@keyframes spin{
+  0%{transform:rotate(0deg);}
+  100%{transform:rotate(360deg);}
+}
+
+/* shimmer kilat depan teks */
+.title-electric span::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:60%;
+  height:100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.5),
+    transparent
+  );
+
+  animation: shine 2.5s infinite;
+}
+
+@keyframes shine{
+  0%{left:-100%;}
+  100%{left:200%;}
+}
+
+
+
+.title-electric-link{
+  text-decoration:none;
+  display:flex;
+  justify-content:center;
+}
 </style>
 </head>
 
@@ -582,6 +808,38 @@ body {
   </div>
 
 </div>
+
+
+
+
+
+
+
+
+<!-- ARTIKEL SECTION -->
+<section class="artikel-section">
+
+<h2 class="artikel-title">
+  <i class="fa fa-newspaper"></i> Promosi Terbaru
+</h2>
+
+  <div id="artikelGrid" class="artikel-grid"></div>
+
+  <div id="artikelGrid"></div>
+
+</section>
+
+
+
+
+<a href="artikelku.html" class="title-electric-link">
+  <div class="title-electric">
+    <span>Promosi lainnya</span>
+  </div>
+</a>
+
+
+
 
 
 <footer class="footer">
@@ -668,61 +926,108 @@ body {
 
 
 
+
+
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-
-import { getAnalytics, isSupported }
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
-
-import {
-  getDatabase,
-  ref,
-  get,
-  child
-}
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
-
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
 const firebaseConfig = {
-
   apiKey: "AIzaSyD4psSFnKb1bQNpJVYySNnB_viOYF90EYk",
-
   authDomain: "orin23project.firebaseapp.com",
-
-  databaseURL:
-  "https://orin23project-default-rtdb.asia-southeast1.firebasedatabase.app",
-
+  databaseURL: "https://orin23project-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "orin23project",
-
-  storageBucket:
-  "orin23project.firebasestorage.app",
-
-  messagingSenderId:
-  "471960564338",
-
-  appId:
-  "1:471960564338:web:a5cc39403a2940672488eb"
-
+  storageBucket: "orin23project.firebasestorage.app",
+  messagingSenderId: "471960564338",
+  appId: "1:471960564338:web:a5cc39403a2940672488eb"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+console.log("SCRIPT FIREBASE READY");
 
 
-(async()=>{
 
-const snap = await get(ref(db));
 
-console.log(
-"ISI DATABASE:",
-snap.val()
-);
 
-})();
 
+
+
+window.loadCards = async function () {
+
+  try {
+
+    const container =
+      document.getElementById("artikelGrid");
+
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    const snap =
+      await get(ref(db, "Artikelkuu"));
+
+    if (!snap.exists()) {
+      container.innerHTML = "<h3 style='text-align:center;'>Tidak ada artikel</h3>";
+      return;
+    }
+
+    const data = snap.val() || {};
+
+    const arr =
+      Object.keys(data)
+        .map(id => ({
+          id,
+          ...data[id]
+        }))
+        .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+    let html = "";
+
+    arr.forEach(item => {
+
+      html += `
+        <a class="artikel-card" href="detailpromosi.html?id=${item.id}">
+          <img src="${item.image || 'assets/images/gambar.png'}">
+          <div class="artikel-info">
+            <h3>${item.title || 'Tanpa Judul'}</h3>
+            <p>${item.tag || ''}</p>
+          </div>
+        </a>
+      `;
+
+    });
+
+    container.innerHTML = html;
+
+  } catch (err) {
+    console.error("ERROR LOAD:", err);
+  }
+
+}
+
+window.loadCards();
+
+
+
+
+
+
+
+
+async function debugFirebase() {
+  try {
+    const snap = await get(ref(db));
+
+    console.log("ISI DATABASE:", snap.val());
+  } catch (err) {
+    console.error("DEBUG ERROR:", err);
+  }
+}
+
+debugFirebase();
 
 
 

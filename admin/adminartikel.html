@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Artikel Orin23</title>
+
+<style>
+body{
+  margin:0;
+  font-family: Arial;
+  background:#0f0f0f;
+  color:white;
+}
+
+/* HEADER */
+h2{
+  text-align:center;
+  margin-top:20px;
+}
+
+/* BUTTON OPEN */
+.open-btn{
+  display:block;
+  width:200px;
+  margin:10px auto;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(45deg,#c39d4e,#8a6a2f);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* GRID */
+.grid{
+  max-width:900px;
+  margin:20px auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:15px;
+}
+
+/* CARD */
+.card{
+  background:rgba(255,255,255,0.06);
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.card img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+}
+
+.content{
+  padding:10px;
+  background:linear-gradient(135deg,#c39d4e,#2a1622);
+}
+
+.actions{
+  display:flex;
+  gap:5px;
+  padding:10px;
+}
+
+.actions button{
+  flex:1;
+  font-size:12px;
+  padding:8px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.del{background:red;color:white;}
+.edit{background:green;color:white;}
+
+/* =========================
+   MODAL POPUP
+========================= */
+.modal{
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.7);
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+
+.modal-box{
+  width:90%;
+  max-width:400px;
+  background:#1c1c1c;
+  padding:15px;
+  border-radius:12px;
+}
+
+.modal-box input,
+.modal-box textarea{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border:none;
+  border-radius:8px;
+  outline:none;
+}
+
+.modal-box button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(45deg,#c39d4e,#8a6a2f);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.close{
+  background:red !important;
+  margin-top:5px;
+}
+
+
+
+
+#deleteModal{
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.7);
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+
+
+
+
+<div class="modal" id="deleteModal">
+  <div class="modal-box">
+
+    <h3 style="text-align:center;">Hapus Artikel?</h3>
+    <p style="text-align:center;opacity:0.8;font-size:13px;">
+      Data yang dihapus tidak bisa dikembalikan
+    </p>
+
+    <button onclick="confirmDelete()" style="background:red;">
+      Ya, Hapus
+    </button>
+
+    <button onclick="closeDelete()" style="margin-top:8px;">
+      Batal
+    </button>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<h2>ADMIN ARTIKEL</h2>
+
+<button class="open-btn" onclick="openAdd()">+ Tambah Artikel</button>
+
+<!-- LIST -->
+<div class="grid" id="list"></div>
+
+<!-- ================= MODAL ================= -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+
+    <input id="title" placeholder="Judul">
+    <input id="image" placeholder="URL Gambar">
+    <input id="tag" placeholder="Tag">
+    <textarea id="desc" placeholder="Isi artikel"></textarea>
+
+    <button onclick="saveArtikel()" id="saveBtn">Simpan</button>
+    <button class="close" onclick="closeModal()">Tutup</button>
+
+  </div>
+</div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  push,
+  set,
+  onValue,
+  remove,
+  update
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD4psSFnKb1bQNpJVYySNnB_viOYF90EYk",
+  authDomain: "orin23project.firebaseapp.com",
+  databaseURL: "https://orin23project-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "orin23project",
+  storageBucket: "orin23project.firebasestorage.app",
+  messagingSenderId: "471960564338",
+  appId: "1:471960564338:web:a5cc39403a2940672488eb"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const artikelRef = ref(db,"Artikelkuu");
+
+
+
+
+
+
+
+const admin = JSON.parse(localStorage.getItem("adminLogin"));
+
+if(!admin || admin.username !== "admin"){
+  alert("Akses ditolak!");
+  window.location.href = "loginadminlord.html";
+}
+
+
+
+
+
+let editId = null;
+
+/* =========================
+   OPEN MODAL ADD
+========================= */
+window.openAdd = function(){
+  editId = null;
+  document.getElementById("modal").style.display="flex";
+
+  document.getElementById("title").value="";
+  document.getElementById("image").value="";
+  document.getElementById("tag").value="";
+  document.getElementById("desc").value="";
+}
+
+/* =========================
+   CLOSE MODAL
+========================= */
+window.closeModal = function(){
+  document.getElementById("modal").style.display="none";
+}
+
+/* =========================
+   SAVE (ADD / EDIT)
+========================= */
+window.saveArtikel = function(){
+  const title = document.getElementById("title").value;
+  const image = document.getElementById("image").value;
+  const tag = document.getElementById("tag").value;
+  const desc = document.getElementById("desc").value;
+
+  if(editId){
+    update(ref(db,"Artikelkuu/"+editId),{
+      title,image,tag,desc
+    });
+  } else {
+    const newRef = push(artikelRef);
+    set(newRef,{title,image,tag,desc});
+  }
+
+  closeModal();
+}
+
+/* =========================
+   DELETE
+========================= */
+let deleteId = null;
+
+window.hapus = function(id){
+  deleteId = id;
+  document.getElementById("deleteModal").style.display="flex";
+}
+
+window.closeDelete = function(){
+  document.getElementById("deleteModal").style.display="none";
+  deleteId = null;
+}
+
+window.confirmDelete = function(){
+  if(deleteId){
+    remove(ref(db,"Artikelkuu/" + deleteId));
+  }
+  closeDelete();
+}
+
+
+
+
+
+
+
+
+/* =========================
+   EDIT
+========================= */
+window.edit = function(id,data){
+  editId = id;
+
+  document.getElementById("title").value = data.title;
+  document.getElementById("image").value = data.image;
+  document.getElementById("tag").value = data.tag;
+  document.getElementById("desc").value = data.desc;
+
+  document.getElementById("modal").style.display="flex";
+}
+
+/* =========================
+   LOAD DATA
+========================= */
+onValue(artikelRef,(snap)=>{
+  const list = document.getElementById("list");
+  list.innerHTML="";
+
+  snap.forEach(child=>{
+    const data = child.val();
+
+    list.innerHTML += `
+      <div class="card">
+        <img src="${data.image}">
+        <div class="content">
+          <h4>${data.title}</h4>
+          <p style="font-size:12px;opacity:0.8">${data.tag}</p>
+        </div>
+
+        <div class="actions">
+          <button class="edit" onclick='edit("${child.key}",${JSON.stringify(data)})'>Edit</button>
+          <button class="del" onclick='hapus("${child.key}")'>Hapus</button>
+        </div>
+      </div>
+    `;
+  });
+});
+</script>
+
+</body>
+</html>

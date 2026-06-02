@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#0f172a,#1e293b);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
+}
+
+.box{
+width:350px;
+padding:25px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.1);
+border-radius:15px;
+}
+
+h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+input{
+width:90%;
+padding:12px;
+margin:8px 0;
+border:none;
+border-radius:10px;
+outline:none;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+background:gold;
+color:black;
+}
+
+.link{
+text-align:center;
+margin-top:10px;
+cursor:pointer;
+color:#60a5fa;
+font-size:13px;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+
+<h2>ADMIN Loz LOGIN</h2>
+
+<div id="loginBox">
+
+<input id="loginUser" placeholder="Username">
+<input id="loginPass" type="password" placeholder="Password">
+
+<button onclick="login()">LOGIN</button>
+
+<div class="link" onclick="show('register')">Daftar Admin</div>
+<div class="link" onclick="show('forgot')">Lupa Password</div>
+
+</div>
+
+<div id="registerBox" style="display:none">
+
+<input id="regUser" placeholder="Username">
+<input id="regPass" type="password" placeholder="Password">
+<input id="regToken" placeholder="Token Admin">
+
+<button onclick="register()">DAFTAR</button>
+
+<div class="link" onclick="show('login')">Kembali Login</div>
+
+</div>
+
+<div id="forgotBox" style="display:none">
+
+<input id="forgotUser" placeholder="Username">
+<input id="forgotToken" placeholder="Token Admin">
+<input id="newPass" type="password" placeholder="Password Baru">
+
+<button onclick="resetPass()">RESET</button>
+
+<div class="link" onclick="show('login')">Kembali Login</div>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD4psSFnKb1bQNpJVYySNnB_viOYF90EYk",
+  authDomain: "orin23project.firebaseapp.com",
+  databaseURL: "https://orin23project-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "orin23project",
+  storageBucket: "orin23project.firebasestorage.app",
+  messagingSenderId: "471960564338",
+  appId: "1:471960564338:web:a5cc39403a2940672488eb"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ======================
+DUMMY ADMIN AUTO CREATE
+====================== */
+async function createDummyAdmin(){
+  const snap = await get(ref(db,"admins/admin1"));
+
+  if(!snap.exists()){
+    await set(ref(db,"admins/admin1"),{
+      username:"admin",
+      password:"123456",
+      token:"ORIS23"
+    });
+    console.log("Dummy admin dibuat");
+  }
+}
+createDummyAdmin();
+
+/* ======================
+UI SWITCH
+====================== */
+window.show = (type)=>{
+document.getElementById("loginBox").style.display = type==="login"?"block":"none";
+document.getElementById("registerBox").style.display = type==="register"?"block":"none";
+document.getElementById("forgotBox").style.display = type==="forgot"?"block":"none";
+};
+
+/* ======================
+LOGIN
+====================== */
+window.login = async () => {
+  const u = loginUser.value.trim();
+  const p = loginPass.value.trim();
+
+  const snap = await get(ref(db, "admins"));
+
+  let found = null;
+
+  snap.forEach(d => {
+    const data = d.val();
+
+    if (data.username === u && data.password === p) {
+      found = data;
+    }
+  });
+
+  if (found) {
+
+    alert("Login sukses");
+
+    // 🔥 FIX SESSION (WAJIB SAMA DENGAN ADMIN)
+    localStorage.setItem("adminLogin", JSON.stringify({
+      username: found.username,
+      loginTime: Date.now()
+    }));
+
+    window.location.href = "admin.html";
+
+  } else {
+    alert("Login gagal");
+  }
+};
+/* ======================
+REGISTER (PAKAI TOKEN)
+====================== */
+window.register = async ()=>{
+const u = regUser.value;
+const p = regPass.value;
+const t = regToken.value;
+
+if(t !== "ORIS23"){
+alert("Token salah!");
+return;
+}
+
+await set(ref(db,"admins/"+Date.now()),{
+username:u,
+password:p,
+token:t
+});
+
+alert("Admin berhasil dibuat");
+show("login");
+};
+
+/* ======================
+RESET PASSWORD
+====================== */
+window.resetPass = async ()=>{
+const u = forgotUser.value;
+const t = forgotToken.value;
+const np = newPass.value;
+
+const snap = await get(ref(db,"admins"));
+
+let key = null;
+
+snap.forEach(d=>{
+if(d.val().username===u && d.val().token===t){
+key = d.key;
+}
+});
+
+if(!key){
+alert("Data tidak ditemukan");
+return;
+}
+
+await set(ref(db,"admins/"+key),{
+username:u,
+password:np,
+token:t
+});
+
+alert("Password berhasil direset");
+show("login");
+};
+
+</script>
+
+</body>
+</html>

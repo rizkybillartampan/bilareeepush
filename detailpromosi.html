@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>Detail Promosi</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  color: white;
+
+  background:
+    linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
+    url("assets/images/en_200_200_wild-bounty-howdown.jpg") no-repeat center center fixed;
+
+  background-size: cover;
+}
+
+/* =========================
+   TOP SECTION
+========================= */
+.top-section {
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)),
+    url("assets/images/regban.jpg") center/cover no-repeat;
+
+  padding: 20px;
+}
+
+/* 🔥 BOX PROFESIONAL */
+.title-box {
+  max-width: 90%;
+  padding: 14px 18px;
+
+  background: rgba(255, 255, 255, 0.08); /* lawan warna gelap */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* TITLE */
+.title-box h1 {
+  font-size: 20px;
+  color: #fff3b0; /* emas biar pop */
+  text-align: center;
+  line-height: 1.4;
+
+  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+
+.top-section h1 {
+  font-size: 22px;
+  color: #facc15;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+
+/* =========================
+   CONTENT BOX
+========================= */
+.container {
+  max-width: 500px;
+  margin: -40px auto 0;
+  padding: 15px;
+}
+
+/* CARD DETAIL */
+.card-detail {
+  background: rgba(30,30,30,0.92);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+}
+
+/* IMAGE */
+.card-detail img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+/* CONTENT */
+.content {
+  padding: 15px;
+  background: linear-gradient(135deg,
+    #fffcf9 0%,
+    #c39d4e 40%,
+    #6b4a1f 80%,
+    #2a1622 100%);
+}
+
+/* TITLE */
+.content h2 {
+  font-size: 18px;
+  color: #fff3b0;
+  margin-bottom: 10px;
+}
+
+/* TEXT */
+.content p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.92);
+
+  white-space: pre-line;   
+  word-break: break-word;
+
+  text-align: justify;   
+  overflow: hidden;
+}
+
+/* TAG */
+.tag {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.15);
+}
+
+/* =========================
+   BOTTOM SECTION
+========================= */
+.bottom-section {
+  margin-top: 25px;
+  min-height: 30vh;
+  background:
+    linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.9)),
+    url("assets/images/regban2.jpg") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 25px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+}
+
+.bottom-section p {
+  font-size: 13px;
+  opacity: 0.85;
+  line-height: 1.6;
+}
+
+/* BACK BUTTON */
+.back {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: rgba(0,0,0,0.6);
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+}
+
+
+
+.rekom {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  overflow-x: auto;
+}
+
+.rec-card {
+  min-width: 140px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.rec-card img {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+}
+
+.rec-card p {
+  font-size: 12px;
+  padding: 6px;
+}
+
+.all {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mini-card {
+  display: flex;
+  gap: 10px;
+  background: rgba(255,255,255,0.08);
+  padding: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.mini-card img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.mini-card h4 {
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.mini-card span {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+
+
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 15px;
+  font-weight: bold;
+
+  margin-top: 25px;
+  margin-bottom: 10px;
+
+  color: #fff3b0;
+  letter-spacing: 0.3px;
+}
+
+.section-title i {
+  font-size: 16px;
+  color: #facc15;
+
+  background: rgba(255,255,255,0.08);
+  padding: 6px;
+  border-radius: 8px;
+}
+
+
+
+
+.footer{
+  margin-top: 50px;
+  color: white;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+}
+
+.footer-container{
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 25px;
+}
+
+.footer-logo{
+  font-size: 22px;
+  font-weight: bold;
+  color: #facc15;
+  margin-bottom: 10px;
+}
+
+.footer-desc,
+.footer-center p{
+  font-size: 13px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.footer-title{
+  font-size: 15px;
+  margin-bottom: 10px;
+  color: #fff3b0;
+}
+
+.footer-links{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-links a{
+  font-size: 13px;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.footer-links a:hover{
+  color: #facc15;
+  transform: translateX(4px);
+}
+
+.livechat-btn{
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: linear-gradient(45deg,#c39d4e,#8a6a2f);
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+  text-align: center;
+}
+
+.footer-bottom{
+  text-align: center;
+  padding: 15px;
+  font-size: 12px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  opacity: 0.8;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<a class="back" href="artikelku.html">Kembali</a>
+
+<div class="top-section">
+  <div class="title-box">
+    <h1 id="judulTop">Loading...</h1>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+  <div class="card-detail">
+    <img id="gambar" src="">
+    <div class="content">
+      <h2 id="judul"></h2>
+      <p id="isi"></p>
+      <span class="tag" id="tag"></span>
+    </div>
+  </div>
+</div>
+
+
+
+
+<h3 class="section-title">
+  <i class="fa-solid fa-thumbs-up"></i>
+  Rekomendasi untuk kamu
+</h3>
+
+<div id="rekomendasiList" class="rekom"></div>
+
+
+<h3 class="section-title">
+  <i class="fa-solid fa-layer-group"></i>
+  Semua Promosi
+</h3>
+
+<div id="allArtikel" class="all"></div>
+
+
+
+
+
+
+
+<footer class="footer">
+  <div class="footer-container">
+
+    <div class="footer-left">
+      <div class="footer-logo" id="footerLogo">Loading...</div>
+      <p id="footerDesc"></p>
+    </div>
+
+    <div class="footer-center">
+      <h3 class="footer-title">Help</h3>
+      <p id="footerHelp"></p>
+
+      <a id="livechatBtn" class="livechat-btn" target="_blank">
+        Live Chat
+      </a>
+    </div>
+
+    <div class="footer-right">
+      <h3 class="footer-title">Links</h3>
+      <div class="footer-links" id="footerLinks"></div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom" id="footerBottom"></div>
+</footer>
+
+
+
+
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  onValue
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyD4psSFnKb1bQNpJVYySNnB_viOYF90EYk",
+  authDomain: "orin23project.firebaseapp.com",
+  databaseURL: "https://orin23project-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "orin23project",
+  storageBucket: "orin23project.firebasestorage.app",
+  messagingSenderId: "471960564338",
+  appId: "1:471960564338:web:a5cc39403a2940672488eb"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+
+const footerRef = ref(db, "footer/main");
+
+get(footerRef).then((snap) => {
+  if (!snap.exists()) return;
+
+  const f = snap.val();
+
+/* ======================
+   TEXT
+====================== */
+document.getElementById("footerLogo").innerText = f.logo || "ORIN23";
+document.getElementById("footerDesc").innerText = f.description || "";
+document.getElementById("footerHelp").innerText = f.help || "";
+document.getElementById("footerBottom").innerText = f.bottom || "";
+
+/* ======================
+   LIVE CHAT
+====================== */
+const live = document.getElementById("livechatBtn");
+if (live) live.href = f.livechat || "#";
+
+/* ======================
+   LINKS (SAFE LOOP)
+====================== */
+const linksBox = document.getElementById("footerLinks");
+linksBox.innerHTML = "";
+
+/* FIX: links bisa object atau array */
+const links = f.links || [];
+
+Object.keys(links).forEach((key) => {
+  const item = links[key];
+
+  linksBox.innerHTML += `
+    <a href="${item.url}" target="_blank">
+      ${item.title}
+    </a>
+  `;
+});
+});
+
+
+
+
+
+
+/* =========================
+   GET ID ARTICLE
+========================= */
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get("id");
+
+const artikelRef = ref(db, "Artikelkuu/" + id);
+const allRef = ref(db, "Artikelkuu");
+
+/* =========================
+   CLEAN TEXT (PROMO FRIENDLY)
+========================= */
+function cleanText(text = "") {
+  return String(text)
+    .replace(/\r\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+/* =========================
+   LOAD DETAIL ARTICLE
+========================= */
+get(artikelRef).then((snapshot) => {
+  if (!snapshot.exists()) {
+    document.getElementById("judulTop").innerText = "Artikel tidak ditemukan";
+    return;
+  }
+
+  const data = snapshot.val();
+
+  document.getElementById("judul").innerText = data.title || "";
+  document.getElementById("judulTop").innerText = data.title || "";
+  document.getElementById("gambar").src = data.image || "";
+  document.getElementById("tag").innerText = data.tag || "";
+
+/* 🔥 PENTING: pakai innerHTML supaya promo bisa rapi */
+  document.getElementById("isi").innerHTML =
+    formatPromo(cleanText(data.desc || ""));
+});
+
+/* =========================
+   FORMAT PROMO (BOX RAPI)
+========================= */
+function formatPromo(text = "") {
+  const parts = text.split(/(?=Promosi\s\d+)/g);
+
+  let html = "";
+
+  parts.forEach((p) => {
+    if (!p.trim()) return;
+
+    html += `
+      <div class="promo-box">
+        <div class="promo-text">${escapeHtml(p.trim())}</div>
+      </div>
+    `;
+  });
+
+  return html;
+}
+
+/* =========================
+   ESCAPE HTML (AMAN)
+========================= */
+function escapeHtml(text = "") {
+  return String(text)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+/* =========================
+   REKOMENDASI + SEMUA ARTIKEL
+========================= */
+onValue(allRef, (snapshot) => {
+  const container = document.getElementById("rekomendasiList");
+  const semuaContainer = document.getElementById("allArtikel");
+
+  container.innerHTML = "";
+  semuaContainer.innerHTML = "";
+
+  if (!snapshot.exists()) return;
+
+  let items = [];
+
+  snapshot.forEach((child) => {
+    items.push({
+      id: child.key,
+      ...child.val()
+    });
+  });
+
+  // 🔥 REKOMENDASI RANDOM
+  const rekom = items
+    .filter((item) => item.id !== id)
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 3);
+
+  rekom.forEach((item) => {
+    container.innerHTML += `
+      <div class="rec-card" onclick="openDetail('${item.id}')">
+        <img src="${item.image || ''}">
+        <p>${item.title || ''}</p>
+      </div>
+    `;
+  });
+
+  // 🔥 SEMUA ARTIKEL
+  items.forEach((item) => {
+    semuaContainer.innerHTML += `
+      <div class="mini-card" onclick="openDetail('${item.id}')">
+        <img src="${item.image || ''}">
+        <div>
+          <h4>${item.title || ''}</h4>
+          <span>${item.tag || ''}</span>
+        </div>
+      </div>
+    `;
+  });
+});
+
+/* =========================
+   NAVIGASI
+========================= */
+window.openDetail = function(id) {
+  window.location.href = "detailpromosi.html?id=" + id;
+};
+
+
+</script>
+
+</body>
+</html>
