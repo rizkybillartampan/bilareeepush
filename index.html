@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>4D Center Animation</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+/* ===== BACKGROUND (TETAP DI TENGAH, TANPA KANAN/KIRI) ===== */
+.space {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(0,255,255,0.15), transparent 60%),
+                radial-gradient(circle at center, rgba(255,0,255,0.15), transparent 60%),
+                radial-gradient(circle at center, rgba(0,0,255,0.15), transparent 60%);
+    animation: pulseBg 6s ease-in-out infinite;
+    filter: blur(2px);
+}
+
+@keyframes pulseBg {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* ===== CENTER TEXT ===== */
+.text {
+    position: relative;
+    color: white;
+    font-size: 60px;
+    letter-spacing: 12px;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 10px cyan,
+        0 0 20px magenta,
+        0 0 40px cyan;
+
+    animation: zoomVertical 4s ease-in-out infinite;
+}
+
+/* ===== ONLY UP DOWN + ZOOM (NO LEFT RIGHT) ===== */
+@keyframes zoomVertical {
+    0% {
+        transform: translateY(40px) scale(0.6);
+        opacity: 0;
+        filter: blur(5px);
+    }
+    50% {
+        transform: translateY(0px) scale(1.2);
+        opacity: 1;
+        filter: blur(0px);
+    }
+    100% {
+        transform: translateY(-40px) scale(0.6);
+        opacity: 0;
+        filter: blur(5px);
+    }
+}
+
+/* ===== PORTAL RING CENTER ===== */
+.ring {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: 2px solid rgba(0,255,255,0.5);
+    box-shadow: 0 0 25px cyan;
+    animation: ringPulse 3s infinite;
+}
+
+@keyframes ringPulse {
+    0% {
+        transform: scale(0.6);
+        opacity: 0.3;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.8);
+        opacity: 0;
+    }
+}
+
+/* ===== OUTER RING ===== */
+.ring2 {
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,0,255,0.25);
+    animation: ringPulse2 4s infinite;
+}
+
+@keyframes ringPulse2 {
+    0% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="space"></div>
+<div class="ring"></div>
+<div class="ring2"></div>
+
+<div class="text">Ledy2</div>
+
+</body>
+</html>
